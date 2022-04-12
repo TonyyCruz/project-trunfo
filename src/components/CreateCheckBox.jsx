@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class CreateImput extends Component {
+class CreateCheckBox extends Component {
   render() {
-    const { attribute, type, description, name, label,
-      value, funct } = this.props;
+    const { attribute, type, description, name, label, funct, checked } = this.props;
     return (
 
-      <label htmlFor={ name } className="Inputs">
+      <label htmlFor={ name } className="Inputs checkBox">
         { label }
         <input
           onChange={ funct }
@@ -15,7 +14,8 @@ class CreateImput extends Component {
           data-testid={ attribute }
           type={ type }
           name={ name }
-          value={ value }
+          // value={ value }
+          checked={ checked }
         />
       </label>
 
@@ -23,19 +23,18 @@ class CreateImput extends Component {
   }
 }
 
-CreateImput.defaultProps = {
+CreateCheckBox.defaultProps = {
   label: '',
-  // checked: '',
 };
 
-CreateImput.propTypes = {
+CreateCheckBox.propTypes = {
   attribute: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
-  value: PropTypes.string.isRequired,
   funct: PropTypes.func.isRequired,
+  checked: PropTypes.bool.isRequired,
 };
 
-export default CreateImput;
+export default CreateCheckBox;

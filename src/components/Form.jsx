@@ -6,6 +6,7 @@ import CreateSelect from './CreateSelect';
 import Rare from './ObjUse';
 import CreateBtn from './CreateBtn';
 import './style.css';
+import CreateCheckBox from './CreateCheckBox';
 
 class Form extends Component {
   render() {
@@ -18,10 +19,8 @@ class Form extends Component {
 
     return (
 
-      <form>
+      <form className="create-form">
         <fieldset className="Fieldset">
-
-          {/* <p>{appState}</p> */}
 
           <CreateImput
             attribute="name-input"
@@ -85,7 +84,7 @@ class Form extends Component {
             value={ cardRare }
           />
 
-          <CreateImput
+          <CreateCheckBox
             attribute="trunfo-input"
             type="checkbox"
             description="Super Trunfo"
