@@ -9,14 +9,19 @@ import './style.css';
 
 class Form extends Component {
   render() {
+    // const { appState } = this.props;
+
     const { cardName, cardDescription, cardAttr1,
       cardAttr2, cardAttr3, cardImage, cardRare, cardTrunfo,
       hasTrunfo, isSaveButtonDisabled, onInputChange,
       onSaveButtonClick } = this.props;
 
     return (
+
       <form>
         <fieldset className="Fieldset">
+
+          {/* <p>{appState}</p> */}
 
           <CreateImput
             attribute="name-input"
