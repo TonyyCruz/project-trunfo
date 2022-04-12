@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class CreateBtn extends Component {
   render() {
-    const { attribute, description, name, funct } = this.props;
+    const { attribute, description, name, funct, value } = this.props;
     return (
 
       <label htmlFor={ name }>
@@ -12,6 +12,7 @@ class CreateBtn extends Component {
           onClick={ funct }
           name={ name }
           data-testid={ attribute }
+          value={ value }
         >
           { description }
         </button>
@@ -23,10 +24,10 @@ class CreateBtn extends Component {
 
 CreateBtn.propTypes = {
   attribute: PropTypes.string.isRequired,
-  // type: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   funct: PropTypes.func.isRequired,
+  value: PropTypes.bool.isRequired,
 };
 
 export default CreateBtn;
