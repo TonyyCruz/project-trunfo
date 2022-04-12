@@ -6,7 +6,7 @@ class CreateTextarea extends Component {
     const { attribute, type, description, name, value, funct } = this.props;
     return (
 
-      <label htmlFor={ name }>
+      <label htmlFor={ name } className="Inputs">
         <textarea
           onChange={ funct }
           placeholder={ description }

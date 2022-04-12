@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 
 class CreateImput extends Component {
   render() {
-    const { attribute, type, description, name, label, value, funct } = this.props;
+    const { attribute, type, description, name, label,
+      value, funct, checked } = this.props;
     return (
 
-      <label htmlFor={ name }>
+      <label htmlFor={ name } className="Inputs">
         { label }
         <input
           onChange={ funct }
@@ -15,6 +16,7 @@ class CreateImput extends Component {
           type={ type }
           name={ name }
           value={ value }
+          checked={ checked }
         />
       </label>
 
@@ -24,6 +26,7 @@ class CreateImput extends Component {
 
 CreateImput.defaultProps = {
   label: '',
+  checked: '',
 };
 
 CreateImput.propTypes = {
@@ -34,6 +37,7 @@ CreateImput.propTypes = {
   label: PropTypes.string,
   value: PropTypes.string.isRequired,
   funct: PropTypes.func.isRequired,
+  checked: PropTypes.bool,
 };
 
 export default CreateImput;

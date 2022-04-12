@@ -1,0 +1,21 @@
+* {
+  border: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.Fieldset {
+  align-items: center;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-height: 1500px;
+  min-height: 500px;
+}
+
+.Inputs {
+  border: 2px solid rgb(170, 170, 170);
+  border-radius: 5px;
+  margin-top: 30px;
+}
