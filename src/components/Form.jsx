@@ -91,7 +91,6 @@ class Form extends Component {
             label="Super Trunfo "
             name="cardTrunfo"
             funct={ onInputChange }
-            value={ cardTrunfo }
             checked={ cardTrunfo }
           />
 

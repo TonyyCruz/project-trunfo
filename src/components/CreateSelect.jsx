@@ -11,8 +11,9 @@ class CreateSelect extends Component {
           data-testid={ attribute }
           name={ name }
           onChange={ funct }
+          value={ value }
         >
-          { options.map((a, b) => <option key={ b } value={ value }>{ a }</option>)}
+          { options.map((a, b) => <option key={ b } value={ a }>{ a }</option>)}
         </select>
       </label>
 
