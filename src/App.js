@@ -28,13 +28,18 @@ class App extends React.Component {
     const { onSaveButtonClick } = this.state;
     const { name, value, checked } = target;
     if (name === 'cardTrunfo') {
-      this.setState({ [name]: checked });
+      this.setState({ [name]: checked }, () => {
+        onSaveButtonClick();
+      });
     }
     if (name === 'cardRare') {
-      this.setState({ [name]: value });
+      this.setState({ [name]: value }, () => {
+        onSaveButtonClick();
+      });
     }
-    this.setState({ [name]: value });
-    onSaveButtonClick();
+    this.setState({ [name]: value }, () => {
+      onSaveButtonClick();
+    });
   }
 
   // verifica se os campos estão preenchidos corretamente. <====
@@ -49,9 +54,9 @@ class App extends React.Component {
     const content = [cardName.length, cardDescription.length,
       cardImage.length, cardRare.length];
 
-    const teste1 = atributes.every((a) => a > 0 && a < max);
+    const teste1 = atributes.every((a) => a >= 0 && a <= max);
     const teste2 = parseFloat(cardAttr1) + parseFloat(cardAttr2)
-    + parseFloat(cardAttr3) < maxSum;
+    + parseFloat(cardAttr3) <= maxSum;
     const teste3 = content.every((a) => a > 0);
     const changeEnable = teste1 && teste2 && teste3;
     if (changeEnable) {
