@@ -14,7 +14,6 @@ class CreateCheckBox extends Component {
           data-testid={ attribute }
           type={ type }
           name={ name }
-          // value={ value }
           checked={ checked }
         />
       </label>
