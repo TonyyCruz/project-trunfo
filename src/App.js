@@ -92,6 +92,7 @@ class App extends React.Component {
       this.setState({ cardRare: 'normal' });
       resetValues.forEach((a) => this.setState({ [a]: '' }));
       resetAtt.forEach((a) => this.setState({ [a]: '0' }));
+      if (cardTrunfo) { this.setState({ hasTrunfo: true }); }
     });
   }
 
