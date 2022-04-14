@@ -17,28 +17,31 @@ class App extends React.Component {
       cardTrunfo: false,
       hasTrunfo: false,
       isSaveButtonDisabled: true,
+      cards: [],
       onInputChange: this.stateChange,
-      onSaveButtonClick: this.saveCheck,
-      // attributeCheck: this.attributeCheck(),
+      onSaveButtonClick: this.saveCard,
+      attributeCheck: this.saveCheck,
     };
   }
 
   // altera os valores do state. <====
   stateChange = ({ target }) => {
-    const { onSaveButtonClick } = this.state;
-    const { name, value, checked } = target;
+    const { attributeCheck, cardTrunfo } = this.state;
+    const { name, value } = target;
     if (name === 'cardTrunfo') {
-      this.setState({ [name]: checked }, () => {
-        onSaveButtonClick();
-      });
+      if (cardTrunfo) {
+        return this.setState({ cardTrunfo: false });
+      }
+      return this.setState({ cardTrunfo: true });
     }
+
     if (name === 'cardRare') {
       this.setState({ [name]: value }, () => {
-        onSaveButtonClick();
+        attributeCheck();
       });
     }
     this.setState({ [name]: value }, () => {
-      onSaveButtonClick();
+      attributeCheck();
     });
   }
 
@@ -64,6 +67,35 @@ class App extends React.Component {
     }
     return this.setState({ isSaveButtonDisabled: true });
   };
+
+  saveCard = (event) => {
+    event.preventDefault();
+
+    const { cardName, cardDescription, cardAttr1,
+      cardAttr2, cardAttr3, cardImage, cardRare,
+      cardTrunfo } = this.state;
+
+    this.setState(({ cards }) => ({
+      cards: [...cards, {
+        cardName,
+        cardDescription,
+        cardAttr1,
+        cardAttr2,
+        cardAttr3,
+        cardImage,
+        cardRare,
+        cardTrunfo,
+      }] }), () => {
+      const resetValues = ['cardName', 'cardDescription', 'cardImage'];
+      const resetAtt = ['cardAttr1', 'cardAttr2', 'cardAttr3'];
+
+      this.setState({ cardRare: 'normal' });
+      resetValues.forEach((a) => this.setState({ [a]: '' }));
+      resetAtt.forEach((a) => this.setState({ [a]: '0' }));
+    });
+  }
+
+  //----------------------------------------------------------------------
 
   render() {
     const { cardName, cardDescription, cardAttr1,
