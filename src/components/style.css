@@ -36,3 +36,7 @@ h1 {
 .checkBox {
   border: none;
 }
+
+.card {
+  border: 2px solid rgb(112, 213, 112);
+}
