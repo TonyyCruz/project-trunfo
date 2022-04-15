@@ -37,6 +37,34 @@ h1 {
   border: none;
 }
 
+.cardPreview {
+  border: 2px solid rgb(255, 106, 106);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  margin-top: 10px;
+  width: 250px;
+}
+
 .card {
   border: 2px solid rgb(112, 213, 112);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  margin: 5px;
+  width: 250px;
+}
+
+.main-contain {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cards-contain {
+  display: flex;
+  padding: 15px;
 }

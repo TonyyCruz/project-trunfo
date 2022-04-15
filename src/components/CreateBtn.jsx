@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class CreateBtn extends Component {
   render() {
-    const { attribute, description, name, funct, value, active } = this.props;
+    const { attribute, description, name, funct, value, isDisable } = this.props;
     return (
 
       <label htmlFor={ name } className="Inputs">
@@ -13,7 +13,7 @@ class CreateBtn extends Component {
           name={ name }
           data-testid={ attribute }
           value={ value }
-          disabled={ active }
+          disabled={ isDisable }
         >
           { description }
         </button>
@@ -29,7 +29,7 @@ CreateBtn.propTypes = {
   name: PropTypes.string.isRequired,
   funct: PropTypes.func.isRequired,
   value: PropTypes.bool.isRequired,
-  active: PropTypes.bool.isRequired,
+  isDisable: PropTypes.bool.isRequired,
 };
 
 export default CreateBtn;

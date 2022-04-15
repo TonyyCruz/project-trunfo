@@ -2,6 +2,7 @@ import React from 'react';
 import Form from './components/Form';
 import Card from './components/Card';
 import './components/style.css';
+import Button from './components/CreateBtn';
 
 class App extends React.Component {
   constructor() {
@@ -92,9 +93,16 @@ class App extends React.Component {
       this.setState({ cardRare: 'normal' });
       resetValues.forEach((a) => this.setState({ [a]: '' }));
       resetAtt.forEach((a) => this.setState({ [a]: '0' }));
-      if (cardTrunfo) { this.setState({ hasTrunfo: true }); }
+      if (cardTrunfo) { this.setState({ hasTrunfo: true, cardTrunfo: false }); }
     });
   }
+
+  dellCard = ({ target }) => {
+    const { cards } = this.state;
+    if (target.value) { this.setState({ hasTrunfo: false }); }
+    const cardList = cards.filter((c) => c.cardName !== target.name);
+    this.setState({ cards: cardList });
+  };
 
   //----------------------------------------------------------------------
 
@@ -104,19 +112,23 @@ class App extends React.Component {
       hasTrunfo, isSaveButtonDisabled, onInputChange,
       onSaveButtonClick, cards } = this.state;
 
-    const cardSave = (<Card
-      cardName={ cardName }
-      cardDescription={ cardDescription }
-      cardAttr1={ cardAttr1 }
-      cardAttr2={ cardAttr2 }
-      cardAttr3={ cardAttr3 }
-      cardImage={ cardImage }
-      cardRare={ cardRare }
-      cardTrunfo={ cardTrunfo }
-    />);
+    const cardPreview = (
+      <div className="cardPreview">
+        <Card
+          cardName={ cardName }
+          cardDescription={ cardDescription }
+          cardAttr1={ cardAttr1 }
+          cardAttr2={ cardAttr2 }
+          cardAttr3={ cardAttr3 }
+          cardImage={ cardImage }
+          cardRare={ cardRare }
+          cardTrunfo={ cardTrunfo }
+        />
+      </div>
+    );
 
     return (
-      <div>
+      <div className="main-contain">
         <h1>Tryunfo</h1>
 
         <Form
@@ -134,22 +146,37 @@ class App extends React.Component {
           onSaveButtonClick={ onSaveButtonClick }
         />
 
-        { cardSave }
+        { cardPreview }
 
-        { cards.map((a, b) => (
-          <div key={ b } className="card">
-            <Card
-              cardName={ a.cardName }
-              cardDescription={ a.cardDescription }
-              cardAttr1={ a.cardAttr1 }
-              cardAttr2={ a.cardAttr2 }
-              cardAttr3={ a.cardAttr3 }
-              cardImage={ a.cardImage }
-              cardRare={ a.cardRare }
-              cardTrunfo={ a.cardTrunfo }
-            />
-          </div>
-        ))}
+        <div className="cards-contain">
+
+          { cards.map((a, b) => (
+            <div key={ b }>
+              <div className="card">
+                <Card
+                  cardName={ a.cardName }
+                  cardDescription={ a.cardDescription }
+                  cardAttr1={ a.cardAttr1 }
+                  cardAttr2={ a.cardAttr2 }
+                  cardAttr3={ a.cardAttr3 }
+                  cardImage={ a.cardImage }
+                  cardRare={ a.cardRare }
+                  cardTrunfo={ a.cardTrunfo }
+                />
+              </div>
+              <Button
+                attribute="delete-button"
+                type="button"
+                description="Excluir"
+                funct={ this.dellCard }
+                name={ a.cardName }
+                value={ a.cardTrunfo }
+                isDisable={ false }
+              />
+            </div>
+          ))}
+
+        </div>
 
       </div>
     );

@@ -105,7 +105,7 @@ class Form extends Component {
             funct={ onSaveButtonClick }
             name="hasTrunfo"
             value={ hasTrunfo }
-            active={ isSaveButtonDisabled }
+            isDisable={ isSaveButtonDisabled }
           />
 
         </fieldset>
