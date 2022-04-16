@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 
 class CreateSelect extends Component {
   render() {
-    const { attribute, options, name, funct, value, description } = this.props;
+    const { attribute, options, name, funct, value, description,
+      isDisabled } = this.props;
     return (
 
       <label htmlFor={ name }>
@@ -14,6 +15,7 @@ class CreateSelect extends Component {
           name={ name }
           onChange={ funct }
           value={ value }
+          disabled={ isDisabled }
         >
           { options.map((a, b) => <option key={ b } value={ a }>{ a }</option>)}
         </select>
@@ -23,6 +25,10 @@ class CreateSelect extends Component {
   }
 }
 
+CreateSelect.defaultProps = {
+  isDisabled: false,
+};
+
 CreateSelect.propTypes = {
   attribute: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(String).isRequired,
@@ -30,6 +36,7 @@ CreateSelect.propTypes = {
   funct: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  isDisabled: PropTypes.bool,
 };
 
 export default CreateSelect;

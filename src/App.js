@@ -3,9 +3,7 @@ import Form from './components/Form';
 import Card from './components/Card';
 import './components/style.css';
 import Button from './components/CreateBtn';
-import CreateImput from './components/CreateInput';
-import CreateSelect from './components/CreateSelect';
-import rareSelect from './components/ObjUse';
+import Filters from './components/Filters';
 
 class App extends React.Component {
   constructor() {
@@ -28,6 +26,7 @@ class App extends React.Component {
       textFilter: '',
       cardFilter: [],
       rareFilter: '',
+      filterDisabled: false,
     };
   }
 
@@ -128,7 +127,7 @@ class App extends React.Component {
     this.setState({ cardFilter: filter });
   }
 
-  filterRare = ({ target }) => {
+  FindRare = ({ target }) => {
     const { cardFilter } = this.state;
     this.setState({ rareFilter: target.value });
 
@@ -136,9 +135,17 @@ class App extends React.Component {
     const filtered = cardFilter.filter((a) => (
       a.cardRare === target.value
     ));
-    console.log('cardFilter: ', cardFilter);
 
     this.setState({ cardFilter: filtered });
+  }
+
+  findTrunfo = () => {
+    const { filterDisabled, cardFilter } = this.state;
+    this.setState({ filterDisabled: !filterDisabled });
+
+    const filter = cardFilter.filter((c) => c.cardTrunfo === true);
+    if (!filterDisabled) { return this.setState({ cardFilter: filter }); }
+    this.resetCardFilter();
   }
 
   //----------------------------------------------------------------------
@@ -147,7 +154,8 @@ class App extends React.Component {
     const { cardName, cardDescription, cardAttr1,
       cardAttr2, cardAttr3, cardImage, cardRare, cardTrunfo,
       hasTrunfo, isSaveButtonDisabled, onInputChange,
-      onSaveButtonClick, textFilter, cardFilter, rareFilter } = this.state;
+      onSaveButtonClick, textFilter, cardFilter, rareFilter,
+      filterDisabled } = this.state;
 
     const cardPreview = (
       <div className="cardPreview">
@@ -188,21 +196,13 @@ class App extends React.Component {
         </div>
 
         <div className="filter-contain">
-          <CreateSelect
-            attribute="rare-filter"
-            options={ rareSelect }
-            name="cardRare"
-            funct={ this.filterRare }
-            value={ rareFilter }
-            description="Buscar raridade: "
-          />
-          <CreateImput
-            attribute="name-filter"
-            type="text"
-            description="Buscar Carta"
-            name="name-filter"
-            funct={ this.FindCard }
-            value={ textFilter }
+          <Filters
+            findTrunfo={ this.findTrunfo }
+            filterDisabled={ filterDisabled }
+            FindRare={ this.FindRare }
+            rareFilter={ rareFilter }
+            FindCard={ this.FindCard }
+            textFilter={ textFilter }
           />
         </div>
 

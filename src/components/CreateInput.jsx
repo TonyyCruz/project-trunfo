@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 class CreateImput extends Component {
   render() {
     const { attribute, type, description, name, label,
-      value, funct } = this.props;
+      value, funct, isDisabled } = this.props;
     return (
 
       <label htmlFor={ name } className="Inputs">
@@ -16,6 +16,7 @@ class CreateImput extends Component {
           type={ type }
           name={ name }
           value={ value }
+          disabled={ isDisabled }
         />
       </label>
 
@@ -25,6 +26,7 @@ class CreateImput extends Component {
 
 CreateImput.defaultProps = {
   label: '',
+  isDisabled: false,
 };
 
 CreateImput.propTypes = {
@@ -35,6 +37,7 @@ CreateImput.propTypes = {
   label: PropTypes.string,
   value: PropTypes.string.isRequired,
   funct: PropTypes.func.isRequired,
+  isDisabled: PropTypes.bool,
 };
 
 export default CreateImput;
