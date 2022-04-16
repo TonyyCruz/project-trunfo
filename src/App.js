@@ -3,6 +3,7 @@ import Form from './components/Form';
 import Card from './components/Card';
 import './components/style.css';
 import Button from './components/CreateBtn';
+import CreateImput from './components/CreateInput';
 
 class App extends React.Component {
   constructor() {
@@ -22,6 +23,8 @@ class App extends React.Component {
       onInputChange: this.stateChange,
       onSaveButtonClick: this.saveCard,
       attributeCheck: this.saveCheck,
+      textFilter: '',
+      cardFilter: [],
     };
   }
 
@@ -48,11 +51,11 @@ class App extends React.Component {
 
   // verifica se os campos estão preenchidos corretamente. <====
   saveCheck = () => {
-    const max = 90;
-    const maxSum = 210;
-
     const { cardName, cardDescription, cardAttr1,
       cardAttr2, cardAttr3, cardImage, cardRare } = this.state;
+
+    const max = 90;
+    const maxSum = 210;
 
     const atributes = [cardAttr1, cardAttr2, cardAttr3];
     const content = [cardName.length, cardDescription.length,
@@ -63,6 +66,7 @@ class App extends React.Component {
     + parseFloat(cardAttr3) <= maxSum;
     const teste3 = content.every((a) => a > 0);
     const changeEnable = teste1 && teste2 && teste3;
+
     if (changeEnable) {
       return this.setState({ isSaveButtonDisabled: false });
     }
@@ -104,13 +108,23 @@ class App extends React.Component {
     this.setState({ cards: cardList });
   };
 
+  FindCard = ({ target }) => {
+    const { cards } = this.state;
+
+    this.setState({ textFilter: target.value });
+
+    const filter = cards.filter((c) => c.cardName.includes(target.value));
+
+    this.setState({ cardFilter: filter });
+  }
+
   //----------------------------------------------------------------------
 
   render() {
     const { cardName, cardDescription, cardAttr1,
       cardAttr2, cardAttr3, cardImage, cardRare, cardTrunfo,
       hasTrunfo, isSaveButtonDisabled, onInputChange,
-      onSaveButtonClick, cards } = this.state;
+      onSaveButtonClick, textFilter, cardFilter, cards } = this.state;
 
     const cardPreview = (
       <div className="cardPreview">
@@ -127,30 +141,43 @@ class App extends React.Component {
       </div>
     );
 
+    const displayCards = (textFilter.length >= 1)
+      ? cardFilter : cards;
+
     return (
       <div className="main-contain">
         <h1>Tryunfo</h1>
 
-        <Form
-          cardName={ cardName }
-          cardDescription={ cardDescription }
-          cardAttr1={ cardAttr1 }
-          cardAttr2={ cardAttr2 }
-          cardAttr3={ cardAttr3 }
-          cardImage={ cardImage }
-          cardRare={ cardRare }
-          cardTrunfo={ cardTrunfo }
-          hasTrunfo={ hasTrunfo }
-          isSaveButtonDisabled={ isSaveButtonDisabled }
-          onInputChange={ onInputChange }
-          onSaveButtonClick={ onSaveButtonClick }
+        <div className="form-contain">
+          <Form
+            cardName={ cardName }
+            cardDescription={ cardDescription }
+            cardAttr1={ cardAttr1 }
+            cardAttr2={ cardAttr2 }
+            cardAttr3={ cardAttr3 }
+            cardImage={ cardImage }
+            cardRare={ cardRare }
+            cardTrunfo={ cardTrunfo }
+            hasTrunfo={ hasTrunfo }
+            isSaveButtonDisabled={ isSaveButtonDisabled }
+            onInputChange={ onInputChange }
+            onSaveButtonClick={ onSaveButtonClick }
+          />
+
+          { cardPreview }
+        </div>
+
+        <CreateImput
+          attribute="name-filter"
+          type="text"
+          description="Buscar Carta"
+          name="name-filter"
+          funct={ this.FindCard }
+          value={ textFilter }
         />
 
-        { cardPreview }
-
         <div className="cards-contain">
-
-          { cards.map((a, b) => (
+          { displayCards.map((a, b) => (
             <div key={ b }>
               <div className="card">
                 <Card
@@ -175,7 +202,6 @@ class App extends React.Component {
               />
             </div>
           ))}
-
         </div>
 
       </div>
