@@ -1,5 +1,5 @@
-const rare = [
-  'normal', 'raro', 'muito raro',
+const rareSelect = [
+  'todas', 'normal', 'raro', 'muito raro',
 ];
 
-export default rare;
+export default rareSelect;

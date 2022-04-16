@@ -4,6 +4,8 @@ import Card from './components/Card';
 import './components/style.css';
 import Button from './components/CreateBtn';
 import CreateImput from './components/CreateInput';
+import CreateSelect from './components/CreateSelect';
+import rareSelect from './components/ObjUse';
 
 class App extends React.Component {
   constructor() {
@@ -25,7 +27,13 @@ class App extends React.Component {
       attributeCheck: this.saveCheck,
       textFilter: '',
       cardFilter: [],
+      rareFilter: '',
     };
+  }
+
+  resetCardFilter = () => {
+    const { cards } = this.state;
+    this.setState({ cardFilter: [...cards] });
   }
 
   // altera os valores do state. <====
@@ -66,7 +74,6 @@ class App extends React.Component {
     + parseFloat(cardAttr3) <= maxSum;
     const teste3 = content.every((a) => a > 0);
     const changeEnable = teste1 && teste2 && teste3;
-
     if (changeEnable) {
       return this.setState({ isSaveButtonDisabled: false });
     }
@@ -98,24 +105,40 @@ class App extends React.Component {
       resetValues.forEach((a) => this.setState({ [a]: '' }));
       resetAtt.forEach((a) => this.setState({ [a]: '0' }));
       if (cardTrunfo) { this.setState({ hasTrunfo: true, cardTrunfo: false }); }
+      this.resetCardFilter();
     });
+    this.setState({ isSaveButtonDisabled: true });
   }
 
   dellCard = ({ target }) => {
     const { cards } = this.state;
     if (target.value) { this.setState({ hasTrunfo: false }); }
     const cardList = cards.filter((c) => c.cardName !== target.name);
-    this.setState({ cards: cardList });
+    this.setState(({ cards: cardList }), () => {
+      this.resetCardFilter();
+    });
   };
 
   FindCard = ({ target }) => {
     const { cards } = this.state;
 
     this.setState({ textFilter: target.value });
-
     const filter = cards.filter((c) => c.cardName.includes(target.value));
 
     this.setState({ cardFilter: filter });
+  }
+
+  filterRare = ({ target }) => {
+    const { cardFilter } = this.state;
+    this.setState({ rareFilter: target.value });
+
+    if (target.value === 'todas') { return this.resetCardFilter(); }
+    const filtered = cardFilter.filter((a) => (
+      a.cardRare === target.value
+    ));
+    console.log('cardFilter: ', cardFilter);
+
+    this.setState({ cardFilter: filtered });
   }
 
   //----------------------------------------------------------------------
@@ -124,7 +147,7 @@ class App extends React.Component {
     const { cardName, cardDescription, cardAttr1,
       cardAttr2, cardAttr3, cardImage, cardRare, cardTrunfo,
       hasTrunfo, isSaveButtonDisabled, onInputChange,
-      onSaveButtonClick, textFilter, cardFilter, cards } = this.state;
+      onSaveButtonClick, textFilter, cardFilter, rareFilter } = this.state;
 
     const cardPreview = (
       <div className="cardPreview">
@@ -140,9 +163,6 @@ class App extends React.Component {
         />
       </div>
     );
-
-    const displayCards = (textFilter.length >= 1)
-      ? cardFilter : cards;
 
     return (
       <div className="main-contain">
@@ -167,17 +187,27 @@ class App extends React.Component {
           { cardPreview }
         </div>
 
-        <CreateImput
-          attribute="name-filter"
-          type="text"
-          description="Buscar Carta"
-          name="name-filter"
-          funct={ this.FindCard }
-          value={ textFilter }
-        />
+        <div className="filter-contain">
+          <CreateSelect
+            attribute="rare-filter"
+            options={ rareSelect }
+            name="cardRare"
+            funct={ this.filterRare }
+            value={ rareFilter }
+            description="Buscar raridade: "
+          />
+          <CreateImput
+            attribute="name-filter"
+            type="text"
+            description="Buscar Carta"
+            name="name-filter"
+            funct={ this.FindCard }
+            value={ textFilter }
+          />
+        </div>
 
         <div className="cards-contain">
-          { displayCards.map((a, b) => (
+          { cardFilter.map((a, b) => (
             <div key={ b }>
               <div className="card">
                 <Card

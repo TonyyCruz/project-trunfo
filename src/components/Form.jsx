@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 import CreateImput from './CreateInput';
 import CreateTextarea from './CrateTextarea';
 import CreateSelect from './CreateSelect';
-import Rare from './ObjUse';
 import CreateBtn from './CreateBtn';
 import './style.css';
 import CreateCheckBox from './CreateCheckBox';
 
 class Form extends Component {
   render() {
-    // const { appState } = this.props;
+    const Rare = [
+      'normal', 'raro', 'muito raro',
+    ];
 
     const { cardName, cardDescription, cardAttr1,
       cardAttr2, cardAttr3, cardImage, cardRare, cardTrunfo,
@@ -94,6 +95,7 @@ class Form extends Component {
             name="cardRare"
             funct={ onInputChange }
             value={ cardRare }
+            description="Raridade: "
           />
 
           {!hasTrunfo ? trunfo : haveTrunfo}

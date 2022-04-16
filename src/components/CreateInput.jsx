@@ -25,8 +25,6 @@ class CreateImput extends Component {
 
 CreateImput.defaultProps = {
   label: '',
-  value: '',
-  // checked: '',
 };
 
 CreateImput.propTypes = {
@@ -35,10 +33,7 @@ CreateImput.propTypes = {
   description: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.array,
-  ]),
+  value: PropTypes.string.isRequired,
   funct: PropTypes.func.isRequired,
 };
 

@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 
 class CreateSelect extends Component {
   render() {
-    const { attribute, options, name, funct, value } = this.props;
+    const { attribute, options, name, funct, value, description } = this.props;
     return (
 
-      <label htmlFor={ name } className="Inputs">
+      <label htmlFor={ name }>
+        { description }
         <select
+          className="Inputs"
           data-testid={ attribute }
           name={ name }
           onChange={ funct }
@@ -27,6 +29,7 @@ CreateSelect.propTypes = {
   name: PropTypes.string.isRequired,
   funct: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
 };
 
 export default CreateSelect;
